@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:translateX="0"
+        android:translateY="4">
+        <!-- Top Wire / Cord (Cyan) -->
+        <path
+            android:strokeColor="#00D2FF"
+            android:strokeWidth="2.2"
+            android:strokeLineCap="round"
+            android:pathData="M 72,40 C 72,18 69,8 72,8 C 74,8 75,20 75,40" />
+
+        <!-- Keyboard Outer Rounded Body -->
+        <path
+            android:strokeColor="#00E5FF"
+            android:strokeWidth="2.4"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:pathData="M 24,40 L 84,40 A 8,8 0 0 1 92,48 L 92,76 A 8,8 0 0 1 84,84 L 24,84 A 8,8 0 0 1 16,76 L 16,48 A 8,8 0 0 1 24,40 Z" />
+
+        <!-- Key Row 1 (Cyan) -->
+        <path
+            android:fillColor="#00D2FF"
+            android:pathData="M20,45 h4 v4 h-4 z M26,45 h4 v4 h-4 z M32,45 h4 v4 h-4 z M38,45 h4 v4 h-4 z M44,45 h4 v4 h-4 z M50,45 h4 v4 h-4 z M56,45 h4 v4 h-4 z M62,45 h4 v4 h-4 z M68,45 h4 v4 h-4 z M74,45 h13 v4 h-13 z" />
+
+        <!-- Key Row 2 (Cyan-Teal) -->
+        <path
+            android:fillColor="#00E5FF"
+            android:pathData="M20,52 h7 v5 h-7 z M30,52 h5 v5 h-5 z M38,52 h5 v5 h-5 z M46,52 h5 v5 h-5 z M54,52 h5 v5 h-5 z M62,52 h5 v5 h-5 z M70,52 h17 v5 h-17 z" />
+
+        <!-- Key Row 3 (Teal-Green) -->
+        <path
+            android:fillColor="#00FFB2"
+            android:pathData="M20,60 h9 v5 h-9 z M32,60 h5 v5 h-5 z M40,60 h5 v5 h-5 z M48,60 h5 v5 h-5 z M56,60 h5 v5 h-5 z M64,60 h23 v5 h-23 z" />
+
+        <!-- Key Row 4 Spacebar Row (Neon Green #07F57E) -->
+        <path
+            android:fillColor="#07F57E"
+            android:pathData="M20,68 h5 v5 h-5 z M28,68 h6 v5 h-6 z M37,68 h28 v5 h-28 z M68,68 h6 v5 h-6 z M77,68 h10 v5 h-10 z" />
+
+        <!-- Accents: Star, Chevron, Plus, Circle -->
+        <path
+            android:fillColor="#00D2FF"
+            android:pathData="M 36,20 L 37.5,23.5 L 41,25 L 37.5,26.5 L 36,30 L 34.5,26.5 L 31,25 L 34.5,23.5 Z" />
+        <path
+            android:strokeColor="#00D2FF"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:pathData="M 80,18 L 84,21 L 80,24" />
+        <path
+            android:strokeColor="#07F57E"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:pathData="M 9,56 L 13,56 M 11,54 L 11,58" />
+        <path
+            android:strokeColor="#00E5FF"
+            android:strokeWidth="1.5"
+            android:pathData="M 97,55 a 2,2 0 1,0 4,0 a 2,2 0 1,0 -4,0" />
+        <path
+            android:strokeColor="#07F57E"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:pathData="M 64,92 L 76,92 M 68,95 L 74,95" />
+    </group>
+</vector>
