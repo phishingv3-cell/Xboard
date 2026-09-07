@@ -22,14 +22,33 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Find Project Subfolder or Root
+        run: |
+          if [ -f "gradlew" ]; then
+            echo "PROJECT_DIR=." >> $GITHUB_ENV
+          elif [ -f "XBoardSinhalaKeyboard/gradlew" ]; then
+            echo "PROJECT_DIR=XBoardSinhalaKeyboard" >> $GITHUB_ENV
+          else
+            # If gradlew file is missing, find where build.gradle.kts is located
+            DIR=$(dirname $(find . -name "build.gradle.kts" -not -path "*/app/*" | head -n 1))
+            echo "PROJECT_DIR=$DIR" >> $GITHUB_ENV
+          fi
+
+      - name: Setup Gradle Wrapper if Missing
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          if [ ! -f "gradlew" ]; then
+            gradle wrapper
+          fi
+          chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: XBoard-Sinhala-Keyboard-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: /**/app/build/outputs/apk/debug/app-debug.apk
