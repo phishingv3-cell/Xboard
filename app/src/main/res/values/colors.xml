@@ -1,0 +1,10 @@
+<resources>
+    <color name="primary">#07f57e</color>
+    <color name="primary_dark">#05be5f</color>
+    <color name="keyboard_bg">#000000</color>
+    <color name="key_bg">#121212</color>
+    <color name="key_pressed">#1f1f1f</color>
+    <color name="key_text">#FFFFFF</color>
+    <color name="candidate_bg">#050505</color>
+    <color name="candidate_text">#07f57e</color>
+</resources>
