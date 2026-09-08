@@ -3,8 +3,6 @@ package com.xboard.sinhalakeyboard
 import android.inputmethodservice.InputMethodService
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 
 class SinhalaInputMethodService : InputMethodService() {
@@ -35,13 +33,7 @@ class SinhalaInputMethodService : InputMethodService() {
         liveThemeManager.applyCurrentTheme()
 
         // 2. Emoji Manager Setup
-        emojiManager.init(
-            keyboardView = keyboardView,
-            onEmojiClick = { emoji ->
-                currentInputConnection?.commitText(emoji, 1)
-                vibrationManager.vibrate()
-            }
-        )
+        emojiManager.init(keyboardView)
 
         // 3. Setup Toolbar & Navigation Buttons (if applicable)
         setupToolbarButtons(keyboardView)
@@ -60,7 +52,10 @@ class SinhalaInputMethodService : InputMethodService() {
         // Toolbar UI Click Listeners Setup (e.g., Emoji Toggle)
         val btnEmojiToggle = rootView.findViewById<TextView>(R.id.btn_back_to_keyboard)
         btnEmojiToggle?.setOnClickListener {
-            emojiManager.hideEmojiLayout()
+            emojiManager.toggleEmojiView { emoji ->
+                currentInputConnection?.commitText(emoji, 1)
+                vibrationManager.vibrate()
+            }
             vibrationManager.vibrate()
         }
     }
