@@ -24,21 +24,21 @@ class SettingsActivity : AppCompatActivity() {
 
         loadRewardedAd()
 
-        // 1. Enable Keyboard in Settings බොත්තම සඳහා
-        val btnEnableKeyboard = findViewById<Button>(R.id.btn_enable_keyboard)
+        // 1. Enable Keyboard in Settings (activity_settings.xml හි ඇති ID එක: btnEnableKeyboard)
+        val btnEnableKeyboard = findViewById<Button>(R.id.btnEnableKeyboard)
         btnEnableKeyboard.setOnClickListener {
             val intent = Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
             startActivity(intent)
         }
 
-        // 2. Select Active Keyboard (Choose Keyboard) බොත්තම සඳහා
-        val btnChooseKeyboard = findViewById<Button>(R.id.btn_choose_keyboard)
-        btnChooseKeyboard.setOnClickListener {
+        // 2. Choose Keyboard (activity_settings.xml හි ඇති ID එක: btnSwitchKeyboard)
+        val btnSwitchKeyboard = findViewById<Button>(R.id.btnSwitchKeyboard)
+        btnSwitchKeyboard.setOnClickListener {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showInputMethodPicker()
         }
 
-        // Live Nature Theme එක එබූ විට (පැවති කෝඩ් එකමයි)
+        // 3. Live Nature Theme Button
         val btnNature = findViewById<Button>(R.id.btn_theme_nature)
         btnNature.setOnClickListener {
             applyOrWatchAdForTheme("live_nature.gif")
