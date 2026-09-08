@@ -1,7 +1,10 @@
 package com.xboard.sinhalakeyboard
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +24,21 @@ class SettingsActivity : AppCompatActivity() {
 
         loadRewardedAd()
 
-        // උදාහරණයක් ලෙස Live Nature Theme එක එබූ විට
+        // 1. Enable Keyboard in Settings බොත්තම සඳහා
+        val btnEnableKeyboard = findViewById<Button>(R.id.btn_enable_keyboard)
+        btnEnableKeyboard.setOnClickListener {
+            val intent = Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
+            startActivity(intent)
+        }
+
+        // 2. Select Active Keyboard (Choose Keyboard) බොත්තම සඳහා
+        val btnChooseKeyboard = findViewById<Button>(R.id.btn_choose_keyboard)
+        btnChooseKeyboard.setOnClickListener {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showInputMethodPicker()
+        }
+
+        // Live Nature Theme එක එබූ විට (පැවති කෝඩ් එකමයි)
         val btnNature = findViewById<Button>(R.id.btn_theme_nature)
         btnNature.setOnClickListener {
             applyOrWatchAdForTheme("live_nature.gif")
@@ -30,7 +47,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun loadRewardedAd() {
         val adRequest = AdRequest.Builder().build()
-        // AdMob Rewarded Ad Unit ID එක මෙතනට දමන්න (Test ID එකක් පහත දී ඇත)
         RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917", adRequest,
             object : RewardedAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedAd) {
@@ -47,13 +63,11 @@ class SettingsActivity : AppCompatActivity() {
         pendingThemeName = themeGifName
         if (rewardedAd != null) {
             rewardedAd?.show(this) { _ ->
-                // Ad එක බැලීම සාර්ථකව අවසන් වූ විට Theme එක Save කිරීම
                 saveSelectedTheme(themeGifName)
                 Toast.makeText(this, "Live Theme Unlocked Successfully!", Toast.LENGTH_SHORT).show()
-                loadRewardedAd() // ඊළඟ Ad එක Load කර තබා ගැනීම
+                loadRewardedAd()
             }
         } else {
-            // Ad එක Load නැතිනම් හෝ Offline නම් සෘජුවම Apply කිරීමට ඉඩදීම
             saveSelectedTheme(themeGifName)
             Toast.makeText(this, "Theme Applied!", Toast.LENGTH_SHORT).show()
         }
