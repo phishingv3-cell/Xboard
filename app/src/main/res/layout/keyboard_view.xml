@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#0A0A0A">
+
+    <!-- 1. Live GIF Background එක Render වන View එක -->
+    <ImageView
+        android:id="@+id/live_theme_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <!-- Main Keyboard UI Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Top Action Toolbar (Emoji, Clipboard, Font, Designer, Dictionary, Sound) -->
+        <HorizontalScrollView
+            android:id="@+id/keyboardToolbarScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#0A0A0C"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/keyboardToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="4dp" />
+        </HorizontalScrollView>
+
+        <!-- Candidate Prediction Bar -->
+        <HorizontalScrollView
+            android:id="@+id/candidateScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/candidate_bg"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/candidateContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="4dp" />
+        </HorizontalScrollView>
+
+        <!-- Main Key Rows Container (Normal Keypad) -->
+        <LinearLayout
+            android:id="@+id/normal_keypad_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/keyboardRowsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="2dp"
+                android:paddingBottom="6dp"
+                android:paddingHorizontal="2dp" />
+        </LinearLayout>
+
+        <!-- 2. Scrollable Emoji Layout (Emoji Button එක එබූ විට පෙනෙන කොටස) -->
+        <LinearLayout
+            android:id="@+id/emoji_full_layout"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <GridLayout
+                    android:id="@+id/emoji_grid_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="8"
+                    android:padding="6dp" />
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/btn_back_to_keyboard"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#121212"
+                android:gravity="center"
+                android:text="ABC"
+                android:textColor="#00FF66"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
