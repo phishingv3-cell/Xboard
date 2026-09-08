@@ -30,10 +30,10 @@ class SinhalaInputMethodService : InputMethodService() {
         liveThemeManager.init(keyboardView)
         liveThemeManager.applyCurrentTheme()
 
-        // 2. Emoji Manager Setup (EmojiManager හි ඇති toggleEmojiView සහ init නිවැරදිව භාවිත කර ඇත)
+        // 2. Emoji Manager Setup
         emojiManager.init(keyboardView)
 
-        // 3. Setup Toolbar & Navigation Buttons (if applicable)
+        // 3. Setup Toolbar & Navigation Buttons
         setupToolbarButtons(keyboardView)
 
         return keyboardView
@@ -47,8 +47,9 @@ class SinhalaInputMethodService : InputMethodService() {
     }
 
     private fun setupToolbarButtons(rootView: View) {
-        // Toolbar UI Click Listeners Setup (e.g., Emoji Toggle)
-        val btnEmojiToggle = rootView.findViewById<TextView>(R.id.btn_back_to_keyboard)
+        // Toolbar UI Click Listeners Setup (Emoji Toggle)
+        // XML එකේ ඇති ඉමෝජි බොත්තමේ නිවැරදි ID එක මෙතැනට දෙන්න (උදා: R.id.btn_emoji_toggle)
+        val btnEmojiToggle = rootView.findViewById<View>(R.id.btn_emoji_toggle)
         btnEmojiToggle?.setOnClickListener {
             emojiManager.toggleEmojiView { emoji ->
                 currentInputConnection?.commitText(emoji, 1)
