@@ -2,7 +2,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ "main" ] # ඔබේ branch එක 'master' නම් එය යොදන්න
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -26,10 +26,9 @@ jobs:
 
     - name: Build Debug APK
       run: gradle assembleDebug
-      working-directory: ./Xboard
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-debug-apk
-        path: Xboard/app/build/outputs/apk/debug/app-debug.apk
+        path: "**/build/outputs/apk/debug/*.apk"
