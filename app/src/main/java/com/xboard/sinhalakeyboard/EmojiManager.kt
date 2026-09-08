@@ -11,6 +11,16 @@ class EmojiManager(private val context: Context) {
     private var emojiLayout: LinearLayout? = null
     private var emojiGrid: GridLayout? = null
 
+    // Emoji ලැයිස්තුව කෙලින්ම මෙතනට එකතු කළා
+    private val allEmojis = listOf(
+        "😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "🥲", "🥹",
+        "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗",
+        "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥳",
+        "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "😣", "😖", "😫",
+        "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳",
+        "👍", "👎", "👏", "🙌", "🫶", "❤️", "🧡", "💛", "💚", "💙"
+    )
+
     fun init(rootView: View) {
         normalLayout = rootView.findViewById(R.id.normal_keypad_layout)
         emojiLayout = rootView.findViewById(R.id.emoji_full_layout)
@@ -30,7 +40,7 @@ class EmojiManager(private val context: Context) {
 
     private fun populateEmojis(onEmojiClicked: (String) -> Unit) {
         emojiGrid?.removeAllViews()
-        for (emoji in EmojiProvider.allEmojis) {
+        for (emoji in allEmojis) {
             val tv = TextView(context).apply {
                 text = emoji
                 textSize = 22f
