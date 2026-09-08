@@ -600,8 +600,6 @@ class SinhalaInputMethodService : InputMethodService() {
 
     private fun commitComposing() {
         if (currentComposingText.isNotEmpty()) {
-            val sinhala = SinhalaTransliterationEngine.transliterate(currentComporaingText.toString()) // Keep or standard transliterate
-            // Using standard transliteration:
             val actualSinhala = SinhalaTransliterationEngine.transliterate(currentComposingText.toString())
             currentInputConnection?.commitText(actualSinhala, 1)
             currentComposingText.clear()
