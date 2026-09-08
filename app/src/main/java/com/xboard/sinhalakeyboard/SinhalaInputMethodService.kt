@@ -48,8 +48,9 @@ class SinhalaInputMethodService : InputMethodService() {
         
         if (isEnglishMode) {
             currentInputText.append(charSeq)
-            // Transliterate English to Sinhala using SinhalaTransliterationEngine
+            // SinhalaInputMethodService.kt ඇතුළේ transliterate කරන තැන මෙන්න මේ විදිහට හරියට දාන්න:
             val transliterated = SinhalaTransliterationEngine.transliterateInput(currentInputText.toString())
+
             currentInputText.toString().commitText(transliterated)
         } else {
             currentInputText.append(charSeq)
