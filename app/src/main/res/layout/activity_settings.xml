@@ -104,6 +104,15 @@
             android:minLines="3"
             android:gravity="top|start" />
 
+        <!-- Live Nature Theme Button -->
+        <Button
+            android:id="@+id/btn_theme_nature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Unlock Live Nature Theme"
+            android:backgroundTint="@color/primary" />
+
         <!-- Google AdMob Banner Ad View -->
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
