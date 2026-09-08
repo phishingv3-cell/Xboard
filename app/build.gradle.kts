@@ -44,6 +44,11 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
+    
     // Google AdMob SDK for monetization on Google Play Store
     implementation("com.google.android.gms:play-services-ads:23.0.0")
+
+    // Glide Library (Gif & Image processing)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 }
