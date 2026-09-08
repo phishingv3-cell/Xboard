@@ -4,7 +4,6 @@ import android.inputmethodservice.InputMethodService
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
-import android.widget.TextView
 
 class SinhalaInputMethodService : InputMethodService() {
 
@@ -48,9 +47,8 @@ class SinhalaInputMethodService : InputMethodService() {
         
         if (isEnglishMode) {
             currentInputText.append(charSeq)
-            // SinhalaInputMethodService.kt ඇතුළේ transliterate කරන තැන මෙන්න මේ විදිහට හරියට දාන්න:
-            val transliterated = SinhalaTransliterationEngine.transliterateInput(currentInputText.toString())
-
+            // Transliterate English to Sinhala using the correct 'transliterate' function
+            val transliterated = SinhalaTransliterationEngine.transliterate(currentInputText.toString())
             currentInputText.toString().commitText(transliterated)
         } else {
             currentInputText.append(charSeq)
