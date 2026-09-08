@@ -3,7 +3,6 @@ package com.xboard.sinhalakeyboard
 import android.inputmethodservice.InputMethodService
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 
 class SinhalaInputMethodService : InputMethodService() {
 
@@ -16,7 +15,6 @@ class SinhalaInputMethodService : InputMethodService() {
 
     override fun onCreate() {
         super.onCreate()
-        // Initialize Core Managers
         liveThemeManager = LiveThemeManager(this)
         vibrationManager = VibrationManager(this)
         emojiManager = EmojiManager(this)
@@ -26,14 +24,11 @@ class SinhalaInputMethodService : InputMethodService() {
     override fun onCreateInputView(): View {
         val keyboardView = layoutInflater.inflate(R.layout.keyboard_view, null)
 
-        // 1. Live Theme Background Initialize
         liveThemeManager.init(keyboardView)
         liveThemeManager.applyCurrentTheme()
 
-        // 2. Emoji Manager Setup
         emojiManager.init(keyboardView)
 
-        // 3. Setup Toolbar & Navigation Buttons
         setupToolbarButtons(keyboardView)
 
         return keyboardView
@@ -41,15 +36,13 @@ class SinhalaInputMethodService : InputMethodService() {
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
-        // Refresh Theme on Keypad View Open
         liveThemeManager.applyCurrentTheme()
         currentComposingText = ""
     }
 
     private fun setupToolbarButtons(rootView: View) {
-        // Toolbar UI Click Listeners Setup (Emoji Toggle)
-        // XML එකේ ඇති ඉමෝජි බොත්තමේ නිවැරදි ID එක මෙතැනට දෙන්න (උදා: R.id.btn_emoji_toggle)
-        val btnEmojiToggle = rootView.findViewById<View>(R.id.btn_emoji_toggle)
+        // keyboard_view.xml හි ඇති btn_back_to_keyboard ID එක මෙහි යොදා ඇත
+        val btnEmojiToggle = rootView.findViewById<View>(R.id.btn_back_to_keyboard)
         btnEmojiToggle?.setOnClickListener {
             emojiManager.toggleEmojiView { emoji ->
                 currentInputConnection?.commitText(emoji, 1)
@@ -59,13 +52,12 @@ class SinhalaInputMethodService : InputMethodService() {
         }
     }
 
-    // Key Press Handlers
     fun onKeyInput(code: Int) {
         vibrationManager.vibrateKeyClick()
         val ic = currentInputConnection ?: return
 
         when (code) {
-            -1 -> { // Backspace
+            -1 -> { 
                 if (currentComposingText.isNotEmpty()) {
                     currentComposingText = currentComposingText.dropLast(1)
                     ic.setComposingText(SinhalaTransliterationEngine.transliterate(currentComposingText), 1)
@@ -73,7 +65,7 @@ class SinhalaInputMethodService : InputMethodService() {
                     ic.deleteSurroundingText(1, 0)
                 }
             }
-            32 -> { // Space
+            32 -> { 
                 if (currentComposingText.isNotEmpty()) {
                     val finalWord = SinhalaTransliterationEngine.transliterate(currentComposingText)
                     ic.commitText("$finalWord ", 1)
@@ -83,7 +75,7 @@ class SinhalaInputMethodService : InputMethodService() {
                     ic.commitText(" ", 1)
                 }
             }
-            10 -> { // Enter
+            10 -> { 
                 if (currentComposingText.isNotEmpty()) {
                     val finalWord = SinhalaTransliterationEngine.transliterate(currentComposingText)
                     ic.commitText(finalWord, 1)
@@ -92,7 +84,7 @@ class SinhalaInputMethodService : InputMethodService() {
                 }
                 ic.sendKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN, android.view.KeyEvent.KEYCODE_ENTER))
             }
-            else -> { // Character Input
+            else -> { 
                 val char = code.toChar()
                 currentComposingText += char
                 val transliterated = SinhalaTransliterationEngine.transliterate(currentComposingText)
