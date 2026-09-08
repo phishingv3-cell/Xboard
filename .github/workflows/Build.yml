@@ -1,0 +1,40 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    name: Build APK with Gradle
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Repository එක Checkout කරගැනීම
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Java (JDK 17) Setup කිරීම (Modern Android builds සඳහා අවශ්‍යයි)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      # 3. Gradle Wrapper වෙත Execute අයිතීන් ලබාදීම (Linux හි Build වීමට අත්‍යවශ්‍යයි)
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 4. Gradle හරහා Debug APK එක Build කිරීම (Auto-generate/compile)
+      - name: Build Debug APK with Gradle
+        run: ./gradlew assembleDebug
+
+      # 5. Build වූ APK එක Artifact එකක් ලෙස Save කර ගැනීම (Download කරගැනීමට)
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: XBoard-SinhalaKeyboard-Debug
+          path: app/build/outputs/apk/debug/app-debug.apk
