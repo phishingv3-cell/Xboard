@@ -11,7 +11,6 @@ class SinhalaInputMethodService : InputMethodService() {
     private lateinit var vibrationManager: VibrationManager
     private lateinit var emojiManager: EmojiManager
     private lateinit var userHistoryManager: UserHistoryManager
-    private lateinit var transliterationEngine: SinhalaTransliterationEngine
 
     private var currentComposingText = ""
 
@@ -22,7 +21,6 @@ class SinhalaInputMethodService : InputMethodService() {
         vibrationManager = VibrationManager(this)
         emojiManager = EmojiManager(this)
         userHistoryManager = UserHistoryManager(this)
-        transliterationEngine = SinhalaTransliterationEngine()
     }
 
     override fun onCreateInputView(): View {
@@ -33,7 +31,13 @@ class SinhalaInputMethodService : InputMethodService() {
         liveThemeManager.applyCurrentTheme()
 
         // 2. Emoji Manager Setup
-        emojiManager.init(keyboardView)
+        emojiManager.init(
+            keyboardView = keyboardView,
+            onEmojiClick = { emoji ->
+                currentInputConnection?.commitText(emoji, 1)
+                vibrationManager.vibrateKeyClick()
+            }
+        )
 
         // 3. Setup Toolbar & Navigation Buttons (if applicable)
         setupToolbarButtons(keyboardView)
@@ -52,31 +56,28 @@ class SinhalaInputMethodService : InputMethodService() {
         // Toolbar UI Click Listeners Setup (e.g., Emoji Toggle)
         val btnEmojiToggle = rootView.findViewById<TextView>(R.id.btn_back_to_keyboard)
         btnEmojiToggle?.setOnClickListener {
-            emojiManager.toggleEmojiView { emoji ->
-                currentInputConnection?.commitText(emoji, 1)
-                vibrationManager.vibrate()
-            }
-            vibrationManager.vibrate()
+            emojiManager.hideEmojiLayout()
+            vibrationManager.vibrateKeyClick()
         }
     }
 
     // Key Press Handlers
     fun onKeyInput(code: Int) {
-        vibrationManager.vibrate()
+        vibrationManager.vibrateKeyClick()
         val ic = currentInputConnection ?: return
 
         when (code) {
             -1 -> { // Backspace
                 if (currentComposingText.isNotEmpty()) {
                     currentComposingText = currentComposingText.dropLast(1)
-                    ic.setComposingText(transliterationEngine.transliterate(currentComposingText), 1)
+                    ic.setComposingText(SinhalaTransliterationEngine.transliterate(currentComposingText), 1)
                 } else {
                     ic.deleteSurroundingText(1, 0)
                 }
             }
             32 -> { // Space
                 if (currentComposingText.isNotEmpty()) {
-                    val finalWord = transliterationEngine.transliterate(currentComposingText)
+                    val finalWord = SinhalaTransliterationEngine.transliterate(currentComposingText)
                     ic.commitText("$finalWord ", 1)
                     userHistoryManager.saveWord(finalWord)
                     currentComposingText = ""
@@ -86,7 +87,7 @@ class SinhalaInputMethodService : InputMethodService() {
             }
             10 -> { // Enter
                 if (currentComposingText.isNotEmpty()) {
-                    val finalWord = transliterationEngine.transliterate(currentComposingText)
+                    val finalWord = SinhalaTransliterationEngine.transliterate(currentComposingText)
                     ic.commitText(finalWord, 1)
                     userHistoryManager.saveWord(finalWord)
                     currentComposingText = ""
@@ -96,7 +97,7 @@ class SinhalaInputMethodService : InputMethodService() {
             else -> { // Character Input
                 val char = code.toChar()
                 currentComposingText += char
-                val transliterated = transliterationEngine.transliterate(currentComposingText)
+                val transliterated = SinhalaTransliterationEngine.transliterate(currentComposingText)
                 ic.setComposingText(transliterated, 1)
             }
         }
